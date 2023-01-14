@@ -26,7 +26,7 @@ def Get2DIdentity(n = 3):
     return np.eye(n)
 
 def Get4DIdentity(n = 3):
-    I = np.zeros((3,3,3,3))
+    I = np.zeros((n,n,n,n))
     for i in range(n):
         for j in range(n):
             for k in range(n):
