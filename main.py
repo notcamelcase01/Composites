@@ -1,5 +1,4 @@
 import numpy as np
-from Get2DMatrix import Get2DMatrixFormOf4thOrderTensor
-
-c = Get2DMatrixFormOf4thOrderTensor(np.random.rand(3,3,3,3))
+from GetNDMatrix import Get2DMatrixFormOf4thOrderTensor  , Get2DIdentity , kdelta , Get4DIdentity
+c = Get2DMatrixFormOf4thOrderTensor(Get4DIdentity())
 print(c)
