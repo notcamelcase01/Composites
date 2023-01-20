@@ -4,7 +4,7 @@ def kdelta(i,j):
     return int(i == j)
 
 def GetIndex(i,j):
-    flag = int(((10*i+j) in [21,2,10]))
+    flag = (10*i+j) == 21 or (10*i+j) == 20 or (10*i+j) == 10
     if(i == j):
         a = i
     else:
@@ -19,7 +19,10 @@ def Get2DMatrixFormOf4thOrderTensor(C, isSymmetric = False):
             for k in range(3):
                 for l in range(3):
                     b,f2 = GetIndex(k,l)
-                    C_1[a][b] = 0.25*(C[i][j][k][l] + (-1)**(f1)*C[j][i][k][l] + (-1)**(f2)*C[i][j][l][k] + (-1)**(f2)*(-1)**(f1)*C[j][i][l][k])
+                    if not isSymmetric:
+                        C_1[a][b] = 0.25*(C[i][j][k][l] + (-1)**(f1)*C[j][i][k][l] + (-1)**(f2)*C[i][j][l][k] + (-1)**(f2)*(-1)**(f1)*C[j][i][l][k])
+                    else:
+                        C_1[a][b] = C[i][j][k][l]
     return C_1[:6,:6] if(isSymmetric)  else C_1
 
 def Get2DIdentity(n = 3):
@@ -36,15 +39,15 @@ def Get4DIdentity(n = 3):
 
 def GetOrthrotropic(E1 , E2 , E3 , v12 , v21 , v31 , v13 , v32 , v23 , G23 , G31 , G12, stiffness = True):
     C = np.zeros((6,6))
-    C[1][1] = 1/E1
-    C[1][2] = -v12/E2
-    C[1][3] = -v13/E3
-    C[2][1] = -v21/E1
+    C[0][0] = 1/E1
+    C[0][2] = -v12/E2
+    C[0][2] = -v13/E3
+    C[2][0] = -v21/E1
     C[2][2] = 1/E2
-    C[2][3] = -v23/E3
-    C[3][1] = -v31/E1
-    C[3][2] = -v32/E2
-    C[3][3] = 1/E3
+    C[2][2] = -v23/E3
+    C[2][0] = -v31/E1
+    C[2][2] = -v32/E2
+    C[2][2] = 1/E3
     C[4][4] = 1/G23
     C[5][5] = 1/G31
     C[6][6] = 1/G12

@@ -15,7 +15,7 @@ def plot_grid(x,y, ax=None,li=1, **kwargs):
 f = lambda x,y,t: (x+t*0.25*(18+6*y),y+t*0.25*(14+2*y))
 
 fig, ax = plt.subplots()
-grid_x,grid_y = np.meshgrid(np.linspace(-10,10,20),np.linspace(-10,10,20))
+grid_x,grid_y = np.meshgrid(np.linspace(-20,20,40),np.linspace(-20,20,40))
 plot_grid(grid_x,grid_y, ax=ax,  color="lightgrey")
 
 def update(i):
@@ -27,7 +27,7 @@ def update(i):
 
 update(0) #plot the original data
 
-anipath = np.arange(0,.1,.0005,dtype = float)
+anipath = np.arange(0,1,.005,dtype = float)
 ani = animation.FuncAnimation(fig, update, frames=anipath, interval = 1,repeat = False)
 
 FFwriter = animation.FFMpegWriter(fps=60)
